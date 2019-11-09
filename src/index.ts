@@ -47,7 +47,7 @@ class X11vncWidget extends IFrame {
      this.title.label = 'Desktop';
      this.title.closable = true;
      this.url = url;
-     this.addClass('jp-vncWidget'); 
+     this.addClass('jp-vncWidget');
   }
 
   setUrl(url: string) : void {
@@ -131,7 +131,7 @@ function activate(
   // Update settings
   function updateSettings(settings: ISettingRegistry.ISettings): void {
     let cached = settings.get('virtualDesktopConfig').composite as JSONObject;
-    Private.setUrl(cached['url'] as string); 
+    Private.setUrl(cached['url'] as string);
     if (x11vncWidget) {
       x11vncWidget.setUrl(Private.getUrl());
     }
@@ -172,6 +172,9 @@ namespace Private {
      if (!VNC_URL) {
        let theUrl=window.location.pathname;
        theUrl=theUrl.replace(/lab\/?$/,"");
+       if (theUrl.startsWith("/")) {
+         theUrl = theUrl.substring(1);
+       }
        VNC_URL=theUrl+'proxy/6080/vnc_lite.html?path='+theUrl+'proxy/6080';
      }
      return VNC_URL;
@@ -183,4 +186,3 @@ namespace Private {
 }
 
 export default extension;
-
